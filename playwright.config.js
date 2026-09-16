@@ -27,7 +27,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Headless mode ko off kiya hai aur 1 sec ka delay add kiya hai */
-    headless: false,
+    headless: true,
     launchOptions: {
       slowMo: 1000, // 1000ms = 1 Second gap between steps
     },
