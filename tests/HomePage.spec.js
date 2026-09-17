@@ -1,20 +1,19 @@
 const { test, expect } = require('@playwright/test');
-
-// DHAYAN DEIN: Yahan { HomePage } Curly braces ke bina import karna hai
 const HomePage = require('../PageObjects/HomePage'); 
 
 test.describe('HomePage Automation Tests', () => {
   let homePage;
-
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
   });
+
 
   test('Step 1: Visit SauceDemo Home Screen', async () => {
     await test.step('Navigate to SauceDemo product page', async () => {
       await homePage.navigateToSauceDemo();
     });
   });
+
 
   test('Step 2: Select Option from Dropdown', async () => {
     await homePage.navigateToSauceDemo();
@@ -23,11 +22,13 @@ test.describe('HomePage Automation Tests', () => {
     });
   });
 
+
   test('Step 3: Visit Northflank Website', async () => {
     await test.step('Navigate to Northflank website', async () => {
       await homePage.navigateToNorthflank();
     });
   });
+
 
   test('Step 4: Hover on Platform Menu', async () => {
     await homePage.navigateToNorthflank();
@@ -36,6 +37,7 @@ test.describe('HomePage Automation Tests', () => {
     });
   });
 
+
   test('Step 5: Perform Drag and Drop Action', async () => {
     await homePage.navigateToDemoQA();
     await test.step('Drag element to target container', async () => {
@@ -43,3 +45,10 @@ test.describe('HomePage Automation Tests', () => {
     });
   });
 });
+
+ test('Step 6: Perform Drag and Drop Action', async () => {
+    await homePage.navigateToDemoQA();
+    await test.step('Drag element to target container', async () => {
+      await homePage.performDragAndDrop();
+    });
+  });
