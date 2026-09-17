@@ -36,14 +36,7 @@ class HomePage {
     await this.dragitem.dragTo(this.dropitem);
   }
 
-   async navigateToDemoQA() {
-    await this.page.goto('https://demoqa.com/droppable');
-  }
-
-  async performDragAndDrop() {
-    await this.acceptTab.click();
-    await this.dragitem.dragTo(this.dropitem);
-  }
+  
 }
 
 // Single class default export
