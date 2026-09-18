@@ -43,6 +43,17 @@ test.describe('HomePage Automation Tests', () => {
     await test.step('Drag element to target container', async () => {
       await homePage.performDragAndDrop();
     });
+
+    
+  });
+
+  test('Step 6: Perform Drag and Drop Action', async () => {
+    await homePage.navigateToDemoQA();
+    await test.step('Drag element to target container', async () => {
+      await homePage.performSimpleDragAndDrop();
+    });
   });
 });
+
+
 
