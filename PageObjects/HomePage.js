@@ -35,6 +35,8 @@ class HomePage {
     await this.acceptTab.click();
     await this.dragitem.dragTo(this.dropitem);
   }
+
+  
 }
 
 // Single class default export
