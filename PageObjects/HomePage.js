@@ -15,9 +15,11 @@ this.simpleDropZone = this.page.locator("//div[@id='simpleDropContainer']//div[@
     await this.page.goto('https://sauce-demo.myshopify.com/collections/frontpage/products/grey-jacket');
   }
 
-  async selectOption() {
-    await this.productDropdown.selectOption({ label: 'Grey jacket' });
-  }
+ async selectOption(optionText = 'Grey jacket') {
+  const dropdown = this.page.locator('select').first();
+  await dropdown.waitFor({ state: 'visible', timeout: 10000 });
+  await dropdown.selectOption({ label: optionText });
+}
 
   async navigateToNorthflank() {
     await this.page.goto('https://northflank.com/heroku-alternative');
