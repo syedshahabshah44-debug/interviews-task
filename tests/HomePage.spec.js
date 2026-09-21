@@ -18,7 +18,8 @@ test.describe('HomePage Automation Tests', () => {
     await homePage.navigateToSauceDemo();
     await page.waitForLoadState('domcontentloaded');
     await test.step('Select option in combobox', async () => {
-      await homePage.selectOption();
+    await homePage.selectOption();
+
     });
   });
 
