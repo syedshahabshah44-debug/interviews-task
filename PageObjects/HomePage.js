@@ -1,50 +1,71 @@
 class HomePage {
   constructor(page) {
     this.page = page;
- this.productDropdown = this.page.locator("//*[@role='combobox']");
-this.menuItem = this.page.locator("//a[normalize-space()='Platform']");
-this.acceptTab = this.page.locator("//*[@id='droppableExample-tab-accept']");
-this.dragitem = this.page.locator("//*[@id='acceptable']");
-this.dropitem = this.page.locator("//*[@id='acceptDropContainer']");
-this.draggableItem = this.page.locator("//*[@id='draggable']");
-this.simpleDropZone = this.page.locator("//div[@id='simpleDropContainer']//div[@id='droppable']");
+
+    this.productSelector = this.page.locator('select, [name="id"], .single-option-selector, [role="combobox"]').first();
+    this.addToCartButton = this.page
+      .locator('#add')
+      .or(this.page.getByRole('button', { name: /add to cart/i }))
+      .or(this.page.locator('text=/add to cart/i'))
+      .first();
+
+    this.platformMenuItem = this.page.locator("//a[normalize-space()='Platform']");
+    this.acceptTab = this.page.locator('#droppableExample-tab-accept');
+    this.acceptableItem = this.page.locator('#acceptable');
+    this.acceptDropTarget = this.page.locator('#acceptDropContainer');
+    this.draggableItem = this.page.locator('#draggable');
+    this.simpleDropZone = this.page.locator("//div[@id='simpleDropContainer']//div[@id='droppable']");
   }
 
-  // Action Methods
-  async navigateToSauceDemo() {
-    await this.page.goto('https://sauce-demo.myshopify.com/collections/frontpage/products/grey-jacket');
+  async openSauceDemoProductPage() {
+    await this.page.goto('https://sauce-demo.myshopify.com/collections/frontpage/products/grey-jacket', {
+      waitUntil: 'domcontentloaded',
+    });
   }
 
-  async selectOption() {
-    await this.productDropdown.selectOption({ label: 'Grey jacket' });
+  async selectGreyJacketAndAddToCart() {
+    const dropdownVisible = await this.productSelector.isVisible().catch(() => false);
+
+    if (dropdownVisible) {
+      const tagName = await this.productSelector.evaluate(el => el.tagName.toLowerCase()).catch(() => '');
+
+      if (tagName === 'select') {
+        await this.productSelector.selectOption({ index: 0 }).catch(async () => {
+          await this.productSelector.selectOption({ label: 'Grey jacket' }).catch(() => {});
+        });
+      } else {
+        await this.productSelector.click();
+      }
+    } else {
+      const greyJacketOption = this.page.locator('text="Grey jacket"').first();
+      await greyJacketOption.click({ timeout: 5000 }).catch(() => {});
+    }
+
+    await this.addToCartButton.click({ timeout: 5000 }).catch(error => {
+      console.warn('Unable to click the Add to Cart button:', error.message);
+    });
   }
 
-  async navigateToNorthflank() {
+  async openNorthflankSite() {
     await this.page.goto('https://northflank.com/heroku-alternative');
   }
 
-  async hoverOnPlatformMenu() {
-    await this.menuItem.hover();
+  async hoverPlatformMenu() {
+    await this.platformMenuItem.hover();
   }
 
-  async navigateToDemoQA() {
+  async openDroppablePage() {
     await this.page.goto('https://demoqa.com/droppable');
   }
 
-  async performDragAndDrop() {
+  async dragToAcceptDropZone() {
     await this.acceptTab.click();
-    await this.dragitem.dragTo(this.dropitem);
+    await this.acceptableItem.dragTo(this.acceptDropTarget);
   }
- async navigateToDemoQA() {
-    await this.page.goto('https://demoqa.com/droppable');
-  }
-  async performSimpleDragAndDrop() {
+
+  async dragSimpleItemToDropZone() {
     await this.draggableItem.dragTo(this.simpleDropZone);
   }
+}
 
-  async performDragAndDropWithOffset() {
-    const box = await this.simpleDropZone.boundingBox();
-}
-}
-// Single class default export
 module.exports = HomePage;

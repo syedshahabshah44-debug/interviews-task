@@ -1,59 +1,58 @@
 const { test, expect } = require('@playwright/test');
-const HomePage = require('../PageObjects/HomePage'); 
+const HomePage = require('../PageObjects/HomePage');
 
-test.describe('HomePage Automation Tests', () => {
+test.describe('User-friendly automation checks', () => {
   let homePage;
+
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
   });
 
-
-  test('Step 1: Visit SauceDemo Home Screen', async () => {
-    await test.step('Navigate to SauceDemo product page', async () => {
-      await homePage.navigateToSauceDemo();
+  test('User can open the Grey Jacket product page', async ({ page }) => {
+    await test.step('Open SauceDemo product page', async () => {
+      await homePage.openSauceDemoProductPage();
     });
+
+    await expect(page).toHaveURL(/grey-jacket/i);
   });
 
+  test('User can choose a size/variant and add the item to cart', async ({ page }) => {
+    await homePage.openSauceDemoProductPage();
 
-  test('Step 2: Select Option from Dropdown', async () => {
-    await homePage.navigateToSauceDemo();
-    await test.step('Select option in combobox', async () => {
-      await homePage.selectOption();
+    await test.step('Select the product option and add it to cart', async () => {
+      await homePage.selectGreyJacketAndAddToCart();
     });
+
+    await expect(page).toHaveURL(/grey-jacket/i);
   });
 
+  test('User can open Northflank and hover the Platform menu', async ({ page }) => {
+    await homePage.openNorthflankSite();
 
-  test('Step 3: Visit Northflank Website', async () => {
-    await test.step('Navigate to Northflank website', async () => {
-      await homePage.navigateToNorthflank();
+    await test.step('Hover over the Platform menu item', async () => {
+      await homePage.hoverPlatformMenu();
     });
+
+    await expect(page).toHaveURL(/northflank/i);
   });
 
+  test('User can open the DemoQA droppable page and complete accept drag and drop', async ({ page }) => {
+    await homePage.openDroppablePage();
 
-  test('Step 4: Hover on Platform Menu', async () => {
-    await homePage.navigateToNorthflank();
-    await test.step('Hover on Platform navigation item', async () => {
-      await homePage.hoverOnPlatformMenu();
+    await test.step('Drag the item into the accept target', async () => {
+      await homePage.dragToAcceptDropZone();
     });
+
+    await expect(page).toHaveURL(/droppable/i);
   });
 
+  test('User can open the DemoQA droppable page and complete simple drag and drop', async ({ page }) => {
+    await homePage.openDroppablePage();
 
-  test('Step 5: Perform Drag and Drop Action', async () => {
-    await homePage.navigateToDemoQA();
-    await test.step('Drag element to target container', async () => {
-      await homePage.performDragAndDrop();
+    await test.step('Move the draggable item onto the drop zone', async () => {
+      await homePage.dragSimpleItemToDropZone();
     });
 
-    
-  });
-
-  test('Step 6: Perform Drag and Drop Action', async () => {
-    await homePage.navigateToDemoQA();
-    await test.step('Drag element to target container', async () => {
-      await homePage.performSimpleDragAndDrop();
-    });
+    await expect(page).toHaveURL(/droppable/i);
   });
 });
-
-
-

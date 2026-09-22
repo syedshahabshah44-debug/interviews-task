@@ -11,5 +11,22 @@
   "devDependencies": {
     "@playwright/test": "^1.63.0",
     "@types/node": "^22.20.3"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server-filesystem": "^2026.8.31",
+    "playwright": "^1.63.0",
+    "playwright-core": "^1.63.0",
+    "undici-types": "^6.21.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syedshahabshah44-debug/interviews-task.git"
+  },
+  "bugs": {
+    "url": "https://github.com/syedshahabshah44-debug/interviews-task/issues"
+  },
+  "homepage": "https://github.com/syedshahabshah44-debug/interviews-task#readme"
 }
