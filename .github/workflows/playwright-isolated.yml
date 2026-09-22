@@ -27,7 +27,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run Chromium tests
-        run: npm run test:chromium
+        run: npx playwright test --project=chromium
 
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
